@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ED Nurse Onboarding Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ======================= HEADER ======================= -->
+  <header class="app-header">
+    <h1>Emergency Department Nurse Onboarding Dashboard</h1>
+    <p class="subtitle">Consolidated orientation progress, exceptions, and manager notes for all new hires.</p>
+  </header>
+
+  <main class="app-main">
+
+    <!-- ======================= SUMMARY CARDS =======================
+         Filled in by script.js (renderSummaryCards). These always
+         reflect the FULL roster, regardless of active search/filters,
+         so managers always see the "big picture" counts. -->
+    <section class="summary-cards" id="summaryCards" aria-label="Summary statistics">
+      <!-- Cards are injected here by JavaScript -->
+    </section>
+
+    <!-- ======================= COLOR LEGEND ======================= -->
+    <section class="legend" aria-label="Status color legend">
+      <span class="legend-item"><span class="dot dot-green"></span> On Track</span>
+      <span class="legend-item"><span class="dot dot-yellow"></span> Nearly Complete</span>
+      <span class="legend-item"><span class="dot dot-orange"></span> Needs Attention</span>
+      <span class="legend-item"><span class="dot dot-red"></span> Behind Schedule</span>
+    </section>
+
+    <!-- ======================= CONTROLS =======================
+         Search box, dropdown filters, and sort controls.
+         script.js reads the current value of each control whenever
+         one of them changes and re-renders the employee list. -->
+    <section class="controls" aria-label="Search, filter, and sort controls">
+
+      <div class="control-group">
+        <label for="searchInput">Search by name</label>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="e.g. Sarah"
+          autocomplete="off"
+        />
+      </div>
+
+      <div class="control-group">
+        <label for="trackFilter">Orientation track</label>
+        <select id="trackFilter">
+          <option value="all">All tracks</option>
+          <option value="30">30-Day Track</option>
+          <option value="60">60-Day Track</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label for="statusFilter">Status</label>
+        <select id="statusFilter">
+          <option value="all">All statuses</option>
+          <option value="On Track">On Track</option>
+          <option value="Nearly Complete">Nearly Complete</option>
+          <option value="Needs Attention">Needs Attention</option>
+          <option value="Behind Schedule">Behind Schedule</option>
+        </select>
+      </div>
+
+      <div class="control-group">
+        <label for="sortSelect">Sort by</label>
+        <div class="sort-row">
+          <select id="sortSelect">
+            <option value="completion">Completion %</option>
+            <option value="name">Employee Name</option>
+            <option value="orientationDay">Orientation Day</option>
+          </select>
+          <button id="sortDirectionBtn" type="button" title="Toggle ascending/descending">
+            ▲ Asc
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ======================= EMPLOYEE LIST =======================
+         Each employee is rendered as a clickable card with a colored
+         progress bar. Clicking a card opens the detail modal below. -->
+    <section class="employee-list" id="employeeList" aria-label="Employee list">
+      <!-- Employee cards are injected here by JavaScript -->
+    </section>
+
+    <p class="empty-state hidden" id="emptyState">No employees match the current search/filters.</p>
+
+  </main>
+
+  <!-- ======================= DETAIL MODAL =======================
+       Hidden by default (see .hidden in styles.css). script.js fills
+       in #modalBody and toggles the "hidden" class to show/hide it. -->
+  <div class="modal-overlay hidden" id="modalOverlay">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalCloseBtn" aria-label="Close detail view">&times;</button>
+      <div id="modalBody">
+        <!-- Employee detail content is injected here by JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <footer class="app-footer">
+    <p>Data source: consolidated master_orientation_dataset.csv, orientation_exceptions.csv, and competency_checklist.csv (embedded in script.js). All data is fictional.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

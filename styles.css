@@ -1,0 +1,424 @@
+/* =========================================================================
+   ED Nurse Onboarding Dashboard — Stylesheet
+   -------------------------------------------------------------------------
+   Organized top to bottom in the same order elements appear on the page:
+   resets -> layout -> header -> summary cards -> legend -> controls ->
+   employee list/cards -> progress bar -> badges -> modal -> footer.
+   ========================================================================= */
+
+/* ---- CSS variables: one place to change the color palette ---- */
+:root {
+  --color-green: #2e7d32;
+  --color-green-bg: #e8f5e9;
+  --color-yellow: #b58a00;
+  --color-yellow-bg: #fff8e1;
+  --color-orange: #e65100;
+  --color-orange-bg: #fff3e0;
+  --color-red: #c62828;
+  --color-red-bg: #ffebee;
+
+  --color-text: #1f2937;
+  --color-text-muted: #6b7280;
+  --color-border: #e5e7eb;
+  --color-bg: #f5f6f8;
+  --color-surface: #ffffff;
+  --radius: 10px;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+/* ---- Header ---- */
+.app-header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 24px 32px;
+}
+
+.app-header h1 {
+  margin: 0 0 4px;
+  font-size: 1.5rem;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+.app-main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 20px 48px;
+}
+
+/* ---- Summary cards ---- */
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.summary-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 16px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border-top: 4px solid var(--color-border);
+}
+
+.summary-card .value {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.summary-card .label {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.summary-card.total { border-top-color: #6b7280; }
+.summary-card.on-track { border-top-color: var(--color-green); }
+.summary-card.nearly-complete { border-top-color: var(--color-yellow); }
+.summary-card.needs-attention { border-top-color: var(--color-orange); }
+.summary-card.behind-schedule { border-top-color: var(--color-red); }
+
+/* ---- Legend ---- */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: 20px;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-green { background: var(--color-green); }
+.dot-yellow { background: var(--color-yellow); }
+.dot-orange { background: var(--color-orange); }
+.dot-red { background: var(--color-red); }
+
+/* ---- Controls (search / filter / sort) ---- */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.control-group input,
+.control-group select {
+  font-size: 0.9rem;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  min-width: 170px;
+}
+
+.sort-row {
+  display: flex;
+  gap: 6px;
+}
+
+#sortDirectionBtn {
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+#sortDirectionBtn:hover {
+  background: var(--color-bg);
+}
+
+/* ---- Employee list / cards ---- */
+.employee-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+}
+
+.employee-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-left: 6px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 16px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.employee-card:hover,
+.employee-card:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+.employee-card.status-green { border-left-color: var(--color-green); }
+.employee-card.status-yellow { border-left-color: var(--color-yellow); }
+.employee-card.status-orange { border-left-color: var(--color-orange); }
+.employee-card.status-red { border-left-color: var(--color-red); }
+
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.card-top h3 {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.card-meta {
+  color: var(--color-text-muted);
+  font-size: 0.82rem;
+  margin: 2px 0 10px;
+}
+
+/* ---- Status badge (used on cards + modal) ---- */
+.badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.badge-green { background: var(--color-green-bg); color: var(--color-green); }
+.badge-yellow { background: var(--color-yellow-bg); color: var(--color-yellow); }
+.badge-orange { background: var(--color-orange-bg); color: var(--color-orange); }
+.badge-red { background: var(--color-red-bg); color: var(--color-red); }
+.badge-neutral { background: #eef0f3; color: var(--color-text-muted); }
+
+/* ---- Progress bar ---- */
+.progress-track {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: #eceef1;
+  overflow: hidden;
+  margin: 6px 0 4px;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.progress-fill.status-green { background: var(--color-green); }
+.progress-fill.status-yellow { background: var(--color-yellow); }
+.progress-fill.status-orange { background: var(--color-orange); }
+.progress-fill.status-red { background: var(--color-red); }
+
+.progress-label {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.follow-up-flag {
+  color: var(--color-orange);
+  font-weight: 600;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: 40px 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ---- Modal (employee detail view) ---- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.55);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 16px;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.modal {
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  max-width: 640px;
+  width: 100%;
+  padding: 28px;
+  position: relative;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  border: none;
+  background: none;
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--color-text-muted);
+}
+
+.modal-close:hover {
+  color: var(--color-text);
+}
+
+.modal h2 {
+  margin: 0 0 2px;
+}
+
+.modal .modal-subtitle {
+  color: var(--color-text-muted);
+  margin: 0 0 16px;
+  font-size: 0.9rem;
+}
+
+.modal-section {
+  margin-top: 18px;
+}
+
+.modal-section h3 {
+  font-size: 0.95rem;
+  margin: 0 0 8px;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 4px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 16px;
+  font-size: 0.88rem;
+}
+
+.info-grid .label {
+  color: var(--color-text-muted);
+}
+
+.competency-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.competency-table th,
+.competency-table td {
+  text-align: left;
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.competency-table th {
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.exception-item {
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-orange);
+  border-radius: 6px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+  background: var(--color-orange-bg);
+}
+
+.exception-item .exception-category {
+  font-weight: 700;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.manager-notes {
+  font-size: 0.88rem;
+  background: var(--color-bg);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+/* ---- Footer ---- */
+.app-footer {
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.78rem;
+  padding: 16px;
+}
+
+/* ---- Responsive: stack summary cards + controls on small screens ---- */
+@media (max-width: 900px) {
+  .summary-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
