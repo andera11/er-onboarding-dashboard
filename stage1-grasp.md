@@ -12,7 +12,7 @@ Use Claude's Cowork capability to consolidate fictional Emergency Department nur
 Claude may organize, summarize, calculate completion percentages, and identify missing information. It may not invent missing data or make employment or orientation decisions.
 
 ## Sign-Off Point
-Before using the consolidated data, I reviewed it to ensure the employee information, completion percentages, and manager notes matched the source files. I also confirmed that missing information was labeled "Needs Manager Review" instead of being assumed.
+After Claude produced the master dataset and exception report, I manually compared three fictional employee records against the original roster, competency checklist, and manager notes. I did not approve the consolidated output until the completion counts, notes, and missing-documentation flags matched the source files.
 
 ## Proof
 Claude produced a consolidated orientation dataset and an orientation exceptions report. I reviewed the results to verify that employees behind schedule, missing documentation, and follow-up items were identified correctly.
